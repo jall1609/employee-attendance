@@ -18,6 +18,10 @@ class JWTMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
+        $token = session('api_token');
+        if ($token) {
+            $request->headers->set('Authorization', 'Bearer ' . $token);
+        }
         try {
             $user = JWTAuth::parseToken()->authenticate();
         } catch (\Exception $e) {

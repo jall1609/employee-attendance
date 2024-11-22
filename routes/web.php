@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Route;
 Route::group(['prefix' => 'admin'], function(){
     Route::get('/login', [AdminController::class, 'login'])->middleware('guest')->name('login');
     Route::post('/login', [AdminController::class, 'prosesLogin'])->middleware('guest');
-    Route::group([], function(){
+    Route::group(['middleware' => [JWTMiddleware::class] ], function(){
         Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
     });
 });
