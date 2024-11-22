@@ -8,13 +8,16 @@
         @include('components.kumpulan-link-css')
         <link href="/templates/template1/css/nucleo-icons.css" rel="stylesheet" />
         <link href="/templates/template1/css/nucleo-svg.css" rel="stylesheet" />
-        <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
         <link id="pagestyle" href="/templates/template1/css/material-dashboard.css?v=3.2.0" rel="stylesheet" />
         @yield('head')
         <style>
             .row {
                 width: 100%;
+            }
+            .invalid-inputan {
+                font-size: .8em;
+                color: red;
             }
         </style>
         @yield('css')
@@ -32,17 +35,22 @@
                 <hr class="horizontal dark mt-0 mb-2">
                 <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
                 <ul class="navbar-nav">
+                    @foreach(['dashboard', 'employee', 'admin', 'attendance'] as $item)
                     <li class="nav-item">
-                        <a class="nav-link text-dark" href="../pages/dashboard.html">
+                        <a class="nav-link text-dark" href="{{ url('/admin/' . $item) }}">
                             <i class="material-symbols-rounded opacity-5">dashboard</i>
-                            <span class="nav-link-text ms-1">Dashboard</span>
+                            <span class="nav-link-text ms-1"> {{ ucwords($item) }} </span>
                         </a>
                     </li>
+                    @endforeach
                 </ul>
                 </div>
                 <div class="sidenav-footer position-absolute w-100 bottom-0 ">
                     <div class="mx-3">
-                    <a class="btn btn-outline-dark mt-4 w-100" href="#" type="button">Logout</a>
+                    <form action="{{url('/admin/logout')}}" method="post">
+                        {{ csrf_field() }}
+                        <button type="submit" class="btn btn-outline-dark mt-4 w-100">Logout</button>
+                    </form>
                 </div>
                 </div>
             </aside>

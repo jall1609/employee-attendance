@@ -14,6 +14,7 @@
     <script src="/templates/template1/js/core/bootstrap.min.js"></script>
     <script src="/templates/template1/js/plugins/perfect-scrollbar.min.js"></script>
     <script src="/templates/template1/js/plugins/smooth-scrollbar.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         var win = navigator.platform.indexOf('Win') > -1;
         if (win && document.querySelector('#sidenav-scrollbar')) {
@@ -25,4 +26,14 @@
     </script>
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <script src="/templates/template1/js/material-dashboard.min.js?v=3.2.0"></script>
+    @if(session('status'))
+    <script >
+        const status_notif = "{{ Session::get('status') }}"
+        Swal.fire({
+            icon: status_notif,
+            title: status_notif == 'success' ? 'Berhasil' : 'Gagal',
+            text: "{{ Session::get('message') }}",
+        });
+    </script>
+    @endif
 </div>

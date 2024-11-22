@@ -1,7 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\APIController;
 
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\ServiceController\AuthService;
+use App\Http\Controllers\WebController\AuthController;
 use App\Models\JobVacancy;
 use App\Models\User;
 use Carbon\Carbon;
@@ -10,8 +13,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-class AuthController extends Controller
+class APIAuthController extends Controller
 {
+    protected $authService ;
+
+    public function __construct(AuthService $authService)
+    {
+        $this->authService = $authService;
+    }
+
     public function createNewToken($token)
     {
         $output = [
@@ -26,24 +36,18 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|string|email|max:100',
-            'password' => 'required|string|min:5'
-        ]);
+        $validator = Validator::make($request->all(), $this->authService->rules_login);
 
         if ($validator->fails()) {
             return sendResponse(400, $validator->errors(), 'Bad Request');
         }
-
         $validatedData = $validator->validated();
-        $credentials = $request->only(['email', 'password']);
 
         try {
-            $token = Auth::attempt($credentials);
+            $token =  $this->authService->prosesLogin($request);
             if($token == false) return sendResponse(400, null, 'Wrong credentials');
         } catch (\Throwable $th) {
-            $return_api = [ 500, $th->getMessage(), 'Internal Server Error'];
-            return sendResponse( ...$return_api );
+            return sendResponse( 500, $th->getMessage(), 'Internal Server Error' );
         }
 
         return $this->createNewToken($token);

@@ -11,6 +11,14 @@
             .row {
                 width: 100%;
             }
+            .invalid-inputan {
+                font-size: .6em;
+                color: red;
+                width: 60%;
+                margin: 10px auto;
+                justify-content: center;
+                display: block;
+            }
         </style>
         @include('admin.login-css')
     </head>
@@ -20,8 +28,18 @@
                 <form action="{{url('/admin/login') }}" method="POST">
                     {{ csrf_field() }}
                     <label for="chk" aria-hidden="true">Login</label>
-                    <input type="email" name="email" placeholder="Email" required="">
-                    <input type="password" name="password" placeholder="Password" required="">
+                    <input type="email" name="email" placeholder="Email" required="" value="{{ old('email') }}">
+                    @error('email')
+                        <div class="invalid-inputan">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                    <input type="password" name="password" placeholder="Password" required="" value="{{ old('password') }}">
+                    @error('password')
+                        <div class="invalid-inputan">
+                            {{ $message }}
+                        </div>
+                    @enderror
                     <button type="submit" >Login</button>
                 </form>
             </div>
