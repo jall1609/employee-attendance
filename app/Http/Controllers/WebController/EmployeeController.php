@@ -67,6 +67,7 @@ class EmployeeController extends Controller
     public function edit(Employee $employee)
     {
         $data['employee'] = $employee->load('user');
+        $data['employee']->email = $employee->user->email;
         return view('admin.create-edit-employee', $data);
 
     }

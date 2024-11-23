@@ -15,9 +15,10 @@ Route::group(['prefix' => 'employee', 'middleware' => [JWTMiddleware::class, API
     Route::post('/absensi', [APIAbsensiController::class, 'absensi']);
     Route::get('/get-absensi', [APIAbsensiController::class, 'getAbsensi']);
 });
-Route::group(['prefix' => 'auth', 'middleware' => 'guest'], function(){
+Route::group(['prefix' => 'auth'], function(){
     Route::post('/register-admin', [APIAuthController::class, 'registerCompany'])->middleware('guest');
     Route::post('/login', [APIAuthController::class, 'login'])->middleware('guest');
+    Route::post('/logout', [APIAuthController::class, 'logout'])->middleware(JWTMiddleware::class);
 });
 Route::group(['prefix' => 'admin', 'middleware' => [JWTMiddleware::class, APIAdminMiddleware::class] ], function(){
     Route::apiResource('/employee', APIEmployeeController::class);

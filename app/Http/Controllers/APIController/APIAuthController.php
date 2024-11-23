@@ -52,4 +52,15 @@ class APIAuthController extends Controller
 
         return $this->createNewToken($token);
     }
+
+    public function logout(Request $request)
+    {
+        try {
+             $this->authService->prosesLogout($request);
+        } catch (\Throwable $th) {
+            return sendResponse( 500, $th->getMessage(), 'Internal Server Error' );
+        }
+
+        return sendResponse(201, null, 'Logout success!');
+    }
 }

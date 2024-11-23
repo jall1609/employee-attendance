@@ -19,7 +19,7 @@
                         <div class="ms-md-auto pe-md-3 d-flex align-items-center my-2">
                             <div class="input-group input-group-outline">
                                 <label class="form-label">{{ ucwords($item) }}</label>
-                                <input type="{{ $item == 'email' ? 'email' : $item }}" class="form-control" name="{{$item}}" value="{{ ($item == 'email' ? $employee->user->email : $employee->$item) ?? old($item)}}" required>
+                                <input type="{{ $item == 'email' ? 'email' : $item }}" class="form-control" name="{{$item}}" value="{{ $employee->$item ?? old($item)}}" required>
                             </div>
                         </div>
                         @error($item)
