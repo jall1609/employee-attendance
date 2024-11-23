@@ -37,7 +37,7 @@ class AuthController extends Controller
 
         session(['api_token' => $token]);
         if(auth()->user()->hasRole('admin')) $redirect_to = 'dashboard';
-        elseif(auth()->user()->hasRole('employee')) $redirect_to = 'employee.index';
+        elseif(auth()->user()->hasRole('employee')) $redirect_to = 'employee.absensi';
 
         return redirect()->route($redirect_to)->with('status', 'success')->with('message', 'Login successful!');
     }
@@ -51,7 +51,7 @@ class AuthController extends Controller
         }
         $token = session('api_token');
         
-        return redirect('/admin/login')->with('status', 'success')->with('message', 'Berhasil Logout');
+        return redirect('/')->with('status', 'success')->with('message', 'Berhasil Logout');
     }
 
 }

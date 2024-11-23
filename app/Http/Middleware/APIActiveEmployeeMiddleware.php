@@ -2,11 +2,12 @@
 
 namespace App\Http\Middleware;
 
+use App\Http\Controllers\ServiceController\AuthService;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class AdminMiddleware
+class APIActiveEmployeeMiddleware
 {
     /**
      * Handle an incoming request.
@@ -15,9 +16,10 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if( empty(auth()->user()) &&  auth()->user()->hasRole('admin') == false) {
-            return abort(403, 'You do not have permission to access this resource');
+        if( (auth()->user()->employee->user->status ?? null) == 'active') {
+            return $next($request);
         }
-        return $next($request);
+        (new AuthService())->prosesLogout();
+        return sendResponse(403, null, 'Akun anda tidak aktif, silahkan hubungi admin');
     }
 }

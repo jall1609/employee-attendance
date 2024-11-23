@@ -35,13 +35,7 @@ class AdminController extends Controller
     {
         $rules = $this->adminService->rules;
         $rules['password'] =  'required|string|min:5';
-        $validator = Validator::make($request->all(), $rules );
-        
-        if ($validator->fails()) {
-            return sendResponse(400, $validator->errors(), 'Bad Request');
-        }
-
-        $validatedData = $validator->validated();
+        $validatedData = $request->validate($rules);
 
         DB::beginTransaction();
         try {

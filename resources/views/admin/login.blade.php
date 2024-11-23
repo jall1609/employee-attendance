@@ -25,7 +25,7 @@
     <body>
         <div class="main">
             <div class="login">
-                <form action="{{url('/admin/login') }}" method="POST">
+                <form action="{{url('/auth/login') }}" method="POST">
                     {{ csrf_field() }}
                     <label for="chk" aria-hidden="true">Login</label>
                     <input type="email" name="email" placeholder="Email" required="" value="{{ old('email') }}">

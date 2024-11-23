@@ -17,4 +17,9 @@ class Employee extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function absensiHariIni()
+    {
+        return $this->hasOne(AbsensiLog::class)->where('tanggal', now()->format('Y-m-d'));
+    }
 }
