@@ -46,9 +46,15 @@
                                     <span class="badge badge-sm bg-gradient-{{ $employee->user->status == 'active' ? 'success' : 'secondary' }}">{{$employee->user->status}}</span>
                                 </td>
                                 <td class="align-middle">
-                                    <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                                    Edit
-                                    </a>
+                                    <a href="{{url('/admin/employee/'. $employee->username . '/edit' )}}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                                    Edit 
+                                    </a> | 
+                                    <form action="{{ url('/admin/employee/'. $employee->username) }}" method="post" class="d-inline-block">
+                                        @method("DELETE")
+                                        {{ csrf_field() }}
+                                        <button type="submit" class="text-secondary font-weight-bold text-xs border-0">Delete</button>
+                                    </form>
+                                    </>
                                 </td>
                             </tr>
                             @endforeach

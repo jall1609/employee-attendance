@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\ServiceController\AdminService;
+use App\Http\Controllers\ServiceController\EmployeeService;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
@@ -51,7 +51,7 @@ class UserSeeder extends Seeder
             ],
         ];
         foreach ($create_employee as $key => $value) {
-            (new EmployeeController())->register($value);
+            (new EmployeeService())->register($value);
         }
 
         Role::findOrCreate('admin');
@@ -68,7 +68,7 @@ class UserSeeder extends Seeder
             ],
         ];
         foreach ($create_admin as $key => $value) {
-            (new AdminController())->register($value);
+            (new AdminService())->register($value);
         }
     }
 }

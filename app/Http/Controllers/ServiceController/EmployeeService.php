@@ -19,7 +19,7 @@ class EmployeeService extends Controller
             'name' => 'required|string|between:4,150',
             'city' => 'required|string|between:4,50',
             'date_of_birth' => 'required|date',
-            'jabatan' => 'required|string|max:14',
+            'jabatan' => 'required|string|max:100',
         ];
     }
 
@@ -42,5 +42,20 @@ class EmployeeService extends Controller
         return collect($data_create_employee)->except(['user_id', 'id'])->merge([
             'email' => $validated_data['email']
         ])->toArray();
+    }
+
+    public function update($validated_data, Employee $employee)
+    {
+        $employee->update($validated_data);
+        $update_user = [];
+        if(isset($validated_data['email'])) $update_user['email'] = $validated_data['email'];
+        if(isset($validated_data['status'])) $update_user['status'] = $validated_data['status'];
+        $employee->user()->update($update_user);
+        return $employee->load('user');
+    }
+
+    public function delete(Employee $employee)
+    {
+        $employee->delete();
     }
 }

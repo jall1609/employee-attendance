@@ -17,5 +17,5 @@ Route::group(['prefix' => 'auth', 'middleware' => 'guest'], function(){
     Route::post('/login', [APIAuthController::class, 'login'])->middleware('guest');
 });
 Route::group(['prefix' => 'admin', 'middleware' => [JWTMiddleware::class, APIAdminMiddleware::class] ], function(){
-    Route::post('/employee/create', [APIEmployeeController::class, 'createEmployee']);
+    Route::apiResource('/employee', APIEmployeeController::class);
 });

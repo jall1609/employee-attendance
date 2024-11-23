@@ -66,7 +66,9 @@ class EmployeeController extends Controller
      */
     public function edit(Employee $employee)
     {
-        //
+        $data['employee'] = $employee->load('user');
+        return view('admin.create-edit-employee', $data);
+
     }
 
     /**
@@ -74,7 +76,22 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, Employee $employee)
     {
-        //
+        $employee->load('user');
+        $rule = $this->employeeService->rules;
+        $rule['status'] = 'required|string';
+        if($employee->user->email == $request->email)  $rule['email'] = 'required|string|email|max:100';
+        $validated_data = $request->validate($rule);
+        
+        DB::beginTransaction();
+        try {
+            $create = $this->employeeService->update($validated_data, $employee);
+            DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return back()->with('status', 'error')->with('message', $th->getMessage());
+        }
+
+        return redirect('/admin/employee')->with('status', 'success')->with('message', "Berhasil update employee");
     }
 
     /**
@@ -82,6 +99,15 @@ class EmployeeController extends Controller
      */
     public function destroy(Employee $employee)
     {
-        //
+        DB::beginTransaction();
+        try {
+            $create = $this->employeeService->delete($employee);
+            DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return back()->with('status', 'error')->with('message', $th->getMessage());
+        }
+
+        return redirect('/admin/employee')->with('status', 'success')->with('message', "Berhasil delete employee");
     }
 }
