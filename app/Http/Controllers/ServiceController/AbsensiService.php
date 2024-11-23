@@ -37,4 +37,11 @@ class AbsensiService extends Controller
             'jam_keluar' => now()
         ]);
     }
+
+    public function getAbsensi(Request $request = null)
+    {
+        return AbsensiLog::with('employee')->when( !empty($request->tanggal), function($q) use ($request) {
+            $q->where('tanggal', $request->tanggal);
+        } )->latest()->get();
+    }
 }

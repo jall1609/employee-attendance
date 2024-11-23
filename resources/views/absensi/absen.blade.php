@@ -34,7 +34,7 @@
 @endsection
 
 @section('content')
-<h2 class="text-center mt-5">FORM ABSENSI</h2>
+<h2 class="text-center mt-5"> {{  ($absensi_hari_ini->status ?? null ) == 'izin' ||  (  ($absensi_hari_ini->status ?? null) == 'hadir' && isset($absensi_hari_ini->jam_keluar)  ) ? 'Terima Kasih Sudah Mengisi Form Absen Hari Ini' : 'FORM ABSENSI'    }}    </h2>
 <div class="cont">
     <div class="container">
         @if(empty($absensi_hari_ini))
@@ -55,8 +55,11 @@
                 <button type="submit" class="right">Absensi Pulang</button>
             </form>
         @else
-        <h3 class="text-center">Anda Sudah mengisi absensi hari ini </h3>
         @endif
+        <form action="{{ url('auth/logout') }}" method="post">
+                {{ csrf_field() }}
+                <button type="submit" class="right">Logout</button>
+            </form>
     </div>
 </div>
 @endsection

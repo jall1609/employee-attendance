@@ -15,7 +15,7 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if( empty(auth()->user()) &&  auth()->user()->hasRole('admin') == false) {
+        if( empty(auth()->user()) ||  auth()->user()->hasRole('admin') == false) {
             return abort(403, 'You do not have permission to access this resource');
         }
         return $next($request);

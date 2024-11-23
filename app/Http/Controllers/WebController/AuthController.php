@@ -51,7 +51,7 @@ class AuthController extends Controller
         }
         $token = session('api_token');
         
-        return redirect('/')->with('status', 'success')->with('message', 'Berhasil Logout');
+        return redirect( ($request->by_admin ?? false) == true   ? '/admin/login' : '/' )->with('status', 'success')->with('message', 'Berhasil Logout');
     }
 
 }

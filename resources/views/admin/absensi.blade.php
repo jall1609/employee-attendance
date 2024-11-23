@@ -6,7 +6,7 @@
         <div class="card my-4">
             <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
             <div class="bg-gradient-dark shadow-dark border-radius-lg pt-4 pb-3">
-                <h6 class="text-white text-capitalize ps-3 d-inline-block">Daftar Hadir Hari ini</h6>
+                <h6 class="text-white text-capitalize ps-3 d-inline-block">Daftar Hadir</h6>
             </div>
             </div>
             <div class="card-body px-0 pb-2">
@@ -14,6 +14,7 @@
                     <table class="table align-items-center mb-0">
                         <thead>
                             <tr>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal</th>
                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Nama Karyawan</th>
                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Keterangan</th>
@@ -21,6 +22,9 @@
                         <tbody>
                             @foreach($data_absensi as $absen)
                             <tr>
+                                <td>
+                                    <p class="text-xs font-weight-bold mb-0">{{$absen->tanggal}}</p>
+                                </td>
                                 <td>
                                     <p class="text-xs font-weight-bold mb-0">{{$absen->employee->name}}</p>
                                 </td>

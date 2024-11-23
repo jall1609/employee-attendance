@@ -15,7 +15,7 @@ class APIEmployeeMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if( empty(auth()->user()) &&  auth()->user()->hasRole('employee') == false) {
+        if( empty(auth()->user()) ||  auth()->user()->hasRole('employee') == false) {
             return sendResponse(403, null, 'You do not have permission to access this resource.' );
         }
         return $next($request);

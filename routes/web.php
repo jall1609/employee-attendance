@@ -15,6 +15,7 @@ Route::group(['prefix' => 'admin'], function(){
     Route::get('/login', [AdminController::class, 'login'])->middleware('guest')->name('login');
     Route::group(['middleware' => [  AuthMiddleware::class, AdminMiddleware::class] ], function(){
         Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
+        Route::get('/attendance', [AdminController::class, 'attendance'])->name('attendance');
         Route::resource('/employee', EmployeeController::class);
     });
 });

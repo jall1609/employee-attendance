@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\APIController\APIAbsensiController;
 use App\Http\Controllers\APIController\APIAuthController;
 use App\Http\Controllers\APIController\APIEmployeeController;
 use App\Http\Middleware\APIActiveEmployeeMiddleware;
@@ -11,7 +12,8 @@ use App\Http\Middleware\EmployeeMiddleware;
 use App\Http\Middleware\JWTMiddleware;
 
 Route::group(['prefix' => 'employee', 'middleware' => [JWTMiddleware::class, APIEmployeeMiddleware::class, APIActiveEmployeeMiddleware::class ]], function(){
-    Route::post('/absensi', [APIEmployeeController::class, 'absensi']);
+    Route::post('/absensi', [APIAbsensiController::class, 'absensi']);
+    Route::get('/get-absensi', [APIAbsensiController::class, 'getAbsensi']);
 });
 Route::group(['prefix' => 'auth', 'middleware' => 'guest'], function(){
     Route::post('/register-admin', [APIAuthController::class, 'registerCompany'])->middleware('guest');

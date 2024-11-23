@@ -26,11 +26,11 @@ class AuthMiddleware
             $user = JWTAuth::parseToken()->authenticate();
         } catch (\Exception $e) {
             if ($e instanceof TokenInvalidException) {
-                return abort(401, 'Login dulu');
+                return redirect(url('/admin/login'))->with('status', 'error')->with('message','Login dulu' ) ;
             } else if ($e instanceof TokenExpiredException) {
-                return abort(401, 'Sesi Habis, silahkan login lagi');
+                return redirect(url('/admin/login'))->with('status', 'error')->with('message','Sesi Habis, silahkan login lagi' ) ;
             }
-            return abort(401, 'Authentication is required');
+            return redirect(url('/admin/login'))->with('status', 'error')->with('message','Login dulu' ) ;
         }
         return $next($request);
     }

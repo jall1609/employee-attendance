@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\WebController;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\ServiceController\AbsensiService;
 use App\Http\Controllers\ServiceController\AdminService;
 use App\Models\Admin;
 use Illuminate\Http\Request;
@@ -12,15 +13,26 @@ use Illuminate\Support\Facades\Validator;
 class AdminController extends Controller
 {
     protected $adminService ;
+    protected $absensiService ;
 
-    public function __construct(AdminService $adminService)
+    public function __construct(AdminService $adminService, AbsensiService $absensiService)
     {
         $this->adminService = $adminService;
+        $this->absensiService = $absensiService;
     }
 
     public function index()
     {
-        return view('admin.index');
+        $data['data_absensi'] = $this->absensiService->getAbsensi(new Request([
+            'tanggal' => now()->format('Y-m-d')
+        ]));
+        return view('admin.index', $data);
+    }
+
+    public function attendance()
+    {
+        $data['data_absensi'] = $this->absensiService->getAbsensi();
+        return view('admin.absensi', $data);
     }
 
     /**

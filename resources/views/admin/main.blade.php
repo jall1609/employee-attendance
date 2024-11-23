@@ -35,7 +35,7 @@
                 <hr class="horizontal dark mt-0 mb-2">
                 <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
                 <ul class="navbar-nav">
-                    @foreach(['dashboard', 'employee', 'admin', 'attendance'] as $item)
+                    @foreach(['dashboard', 'employee',  'attendance'] as $item)
                     <li class="nav-item">
                         <a class="nav-link text-dark" href="{{ url('/admin/' . $item) }}">
                             <i class="material-symbols-rounded opacity-5">dashboard</i>
